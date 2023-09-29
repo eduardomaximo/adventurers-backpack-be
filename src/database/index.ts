@@ -1,19 +1,13 @@
-const { Client } = require("pg");
+const mongoose = require("mongoose");
 
-const client = new Client({
-  // connection
-  host: "localhost",
-  port: 5432,
-  // access
-  user: "root",
-  password: "root",
-  database: "adventurersbackpack",
-});
+async function main() {
+  try {
+    await mongoose
+      .connect("mongodb://admin:admin@localhost:27017/admin")
+      .then(() => console.log("Database connected."));
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-client.connect();
-
-exports.query = async (query, values) => {
-  const { rows } = await client.query(query, values);
-
-  return rows;
-};
+module.exports = main;
